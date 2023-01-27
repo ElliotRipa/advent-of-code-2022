@@ -38,7 +38,25 @@ public class day01 {
                 elfCalories += Integer.parseInt(line);
             }
         }
-        System.out.println(pq.remove().calorieCount);
+        int cumulativeCalorieCount = pq.remove().calorieCount;
+        System.out.println(cumulativeCalorieCount);
+
+
+        //Part Two
+        int elvesToCheck = 3;       //Change this to see the calorie count of the top x elves.
+        if(pq.size() < elvesToCheck - 1) {
+            System.out.println("Not enough elves.");
+        } else {
+            for (int i = 1 ; i < elvesToCheck ; i++) {
+                cumulativeCalorieCount += pq.remove().calorieCount;
+            }
+
+            System.out.println(cumulativeCalorieCount);
+
+        }
+
     }
+
+
 
 }

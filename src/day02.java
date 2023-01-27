@@ -7,12 +7,16 @@ public class day02 {
         ArrayList<String> input = FileReader.readFile(".\\input\\day02input.txt");
 
         char opponentChoice;
+        char result;
         char playerChoice;
         int totalScore = 0;
 
         for (String line : input) {
             opponentChoice = line.charAt(0);
-            playerChoice = line.charAt(2);
+            result = line.charAt(2);
+
+            playerChoice = getPlayerChoice(opponentChoice, result);
+
             totalScore +=roundResult(opponentChoice, playerChoice);
 
         }
@@ -21,8 +25,33 @@ public class day02 {
 
     }
 
+
+    public static char getPlayerChoice(char opponent, char result) {
+
+        int playerChoiceInt = Math.floorMod(result, 3);
+        char playerChoiceChar;
+
+        switch (playerChoiceInt) {
+            case 0:
+                playerChoiceChar = (char) (Math.floorMod(opponent, 3));       //Win
+                break;
+            case 1:
+                playerChoiceChar = (char) ((Math.floorMod(opponent, 3))+1);       //Lose
+                break;
+            case 2:
+                playerChoiceChar = (char) ((Math.floorMod(opponent, 3))+2);         //Draw
+                break;
+            default:
+                playerChoiceChar = 'E';
+                break;
+        }
+
+        return playerChoiceChar;
+    }
+
+
     public static int roundResult(char opponent, char player) {
-        int result = (player - opponent) % 3;
+        int result = Math.floorMod((player - opponent), 3);
 
         int playerScore = 0;
 
@@ -38,7 +67,7 @@ public class day02 {
                 break;
         }
 
-        switch (player % 3) {
+        switch (Math.floorMod(player, 3)) {
             case 0:                     // 0 -> Scissors -> 3 pts.
                 playerScore += 3;
                 break;
